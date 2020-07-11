@@ -1,0 +1,29 @@
+---
+name: Docker
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+  schedule:
+    - cron: "15 4 * * 0" # Every Sunday morning
+
+jobs:
+  build-job:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker build
+        run: docker build . -t foo
+      - name: untidy
+        run: tail -n 1 t/test-data/perl.pl | wc -c | xargs -I {} truncate t/test-data/perl.pl -s -{} && echo "  my \$foo = 'bar';" >> t/test-data/perl.pl
+      - name: git status
+        run: git status
+      - name: Run Tests
+        run: docker run -v $(pwd):/tmp foo tidy --all
+      - name: git status
+        run: git status
