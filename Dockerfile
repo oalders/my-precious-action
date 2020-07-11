@@ -22,6 +22,6 @@ RUN "$HOME/.yarn/bin/yarn" install
 
 RUN npm install -g prettier
 
-#CMD ["/bin/bash"]
+ENTRYPOINT ["/usr/local/bin/precious"]
 
-#ENTRYPOINT ["/usr/local/bin/precious"]
+CMD ["--help"]

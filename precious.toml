@@ -1,0 +1,5 @@
+[commands.perltidy]
+type    = "tidy"
+include = "**/*.pl"
+cmd     = ["perltidy", "-b"]
+ok_exit_codes = 0
